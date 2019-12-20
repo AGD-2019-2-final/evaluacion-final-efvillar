@@ -18,13 +18,18 @@
 -- 
 fs -rm -f -r output;
 -- 
-u = LOAD 'data.csv' USING PigStorage(',') 
+datos = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
         surname:CHARARRAY, 
         birthday:CHARARRAY, 
         color:CHARARRAY, 
         quantity:INT);
---
+--        
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = FOREACH datos GENERATE firstname as firstname, color AS color;
+
+datos1 = FILTER datos BY NOT (color matches '.*b.*');
+
+STORE datos1 INTO './output' using PigStorage(',');

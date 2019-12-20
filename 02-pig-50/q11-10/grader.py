@@ -2,24 +2,24 @@
 ##! /usr/local/bin/python3
 r"""Test cases
 >>> run_answer() # doctest: +NORMALIZE_WHITESPACE
-Boyer,BOYER,boyer
-Coffey,COFFEY,coffey
-Conway,CONWAY,conway
-Crane,CRANE,crane
-Diaz,DIAZ,diaz
-Estes,ESTES,estes
-Fry,FRY,fry
-Garrett,GARRETT,garrett
-Guy,GUY,guy
-Hamilton,HAMILTON,hamilton
-Holcomb,HOLCOMB,holcomb
-Jarvis,JARVIS,jarvis
-Kinney,KINNEY,kinney
-Klein,KLEIN,klein
-Knight,KNIGHT,knight
-Noel,NOEL,noel
-Sexton,SEXTON,sexton
-Silva,SILVA,silva
+Boyer,BOYER,Boyer
+Coffey,COFFEY,Coffey
+Conway,CONWAY,Conway
+Crane,CRANE,Crane
+Diaz,DIAZ,Diaz
+Estes,ESTES,Estes
+Fry,FRY,Fry
+Garrett,GARRETT,Garrett
+Guy,GUY,Guy
+Hamilton,HAMILTON,Hamilton
+Holcomb,HOLCOMB,Holcomb
+Jarvis,JARVIS,Jarvis
+Kinney,KINNEY,Kinney
+Klein,KLEIN,Klein
+Knight,KNIGHT,Knight
+Noel,NOEL,Noel
+Sexton,SEXTON,Sexton
+Silva,SILVA,Silva
 <BLANKLINE>
 
 """

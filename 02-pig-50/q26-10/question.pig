@@ -17,7 +17,7 @@
 -- 
 fs -rm -f -r output;
 --
-u = LOAD 'data.csv' USING PigStorage(',') 
+datos = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
         surname:CHARARRAY, 
@@ -27,3 +27,9 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = FOREACH datos GENERATE firstname as firstname;
+
+
+datos1 = FILTER datos BY (firstname matches '[M-Z].*');
+
+STORE datos1 INTO './output' using PigStorage(',');

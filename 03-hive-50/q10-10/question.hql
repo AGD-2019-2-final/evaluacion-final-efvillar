@@ -24,3 +24,21 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+DROP TABLE IF EXISTS temporal;
+CREATE TABLE temporal AS
+SELECT  temp1 FROM t0
+    LATERAL VIEW explode(c3) ss as temp1, temp2;
+
+
+DROP TABLE IF EXISTS temporal1;
+CREATE TABLE temporal1 AS
+SELECT  temp1, count(temp1) FROM temporal
+    GROUP BY temp1;
+
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY ':'
+STORED AS TEXTFILE
+Select * FROM temporal1;

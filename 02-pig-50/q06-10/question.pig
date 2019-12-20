@@ -12,3 +12,13 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = LOAD 'data.tsv' using PigStorage('\t') AS (columna1:chararray,columna2:chararray,columna3:chararray);
+x = FOREACH datos GENERATE REPLACE(columna3, '\\u005D', '') AS data;
+y = FOREACH x GENERATE REPLACE(data, '\\u005B', '') AS data;
+z = FOREACH y GENERATE REPLACE(data, '\\d', '') AS data;
+z = FOREACH z GENERATE REPLACE(data, '#', '') AS data;
+z = FOREACH z GENERATE FLATTEN(TOKENIZE(data,',')) AS data;
+z = GROUP z BY $0;
+z = FOREACH z GENERATE group, COUNT(z);
+
+STORE z INTO './output' using PigStorage(',');

@@ -12,3 +12,12 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = LOAD 'data.tsv' using PigStorage('\t') AS (columna1:chararray,columna2:chararray,columna3:chararray);
+
+datos = FOREACH datos GENERATE columna1, TOKENIZE(columna2,',') as columna2, TOKENIZE(columna3,',') as columna3;
+
+datos = FOREACH datos GENERATE columna1, COUNT(columna2), COUNT(columna3);
+
+datos = ORDER datos BY * ASC;
+
+STORE datos INTO './output' using PigStorage(',');

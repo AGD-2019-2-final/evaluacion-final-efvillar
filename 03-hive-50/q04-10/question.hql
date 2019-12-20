@@ -39,4 +39,27 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+DROP TABLE IF EXISTS temporal;
+CREATE TABLE temporal AS
+SELECT  c5[0] as data1,  c5[1] as data2,  c5[0] as data3
+--SELECT c5
+FROM tbl0;
+--LATERAL VIEW explode(c5) asTable AS resultado;
 
+DROP TABLE IF EXISTS temporal1;
+CREATE TABLE temporal1 AS
+SELECT data1 FROM temporal
+union all select data2 from temporal
+union all select data3 from temporal
+;
+
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+
+select distinct * from temporal1
+;
+    --ORDER BY data;
+    --LIMIT 5;

@@ -27,5 +27,11 @@
 -- 
 fs -rm -f -r output;
 --
+datos = LOAD 'data.csv' using PigStorage(',') AS (columna1:int,columna2:chararray,columna3:chararray,
+                                                columna4:chararray,columna5:chararray,columna6:int);
 
+datos = FOREACH datos GENERATE columna2 as columna2, columna3 as columna3;
 
+datos = FOREACH datos GENERATE CONCAT(columna2,'@',columna3);
+
+STORE datos INTO './output' using PigStorage('\t');

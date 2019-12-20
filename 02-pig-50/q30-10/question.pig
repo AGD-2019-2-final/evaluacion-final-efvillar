@@ -30,7 +30,8 @@
 -- 
 fs -rm -f -r output;
 --
-u = LOAD 'data.csv' USING PigStorage(',') 
+
+datos = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
         surname:CHARARRAY, 
@@ -40,4 +41,33 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = FOREACH datos GENERATE birthday as birthday;
 
+datos1 = FOREACH datos GENERATE birthday as columna1, 
+SUBSTRING(birthday,8,10) as columna2,
+(int) SUBSTRING(birthday,8,10) as columna3, ToString(ToDate(birthday),'E') as columna4, 
+ToString(ToDate(birthday),'E') as columna5;
+
+
+datosA = FOREACH datos1 GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Mon', 'lun') AS columna4,
+ REPLACE(columna5, 'Mon', 'lunes') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Tue', 'mar') AS columna4,
+ REPLACE(columna5, 'Tue', 'martes') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Wed', 'mie') AS columna4,
+ REPLACE(columna5, 'Wed', 'miercoles') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Thu', 'jue') AS columna4,
+ REPLACE(columna5, 'Thu', 'jueves') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Fri', 'vie') AS columna4,
+ REPLACE(columna5, 'Fri', 'viernes') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Sat', 'sab') AS columna4,
+ REPLACE(columna5, 'Sat', 'sabado') AS columna5;
+
+datosA = FOREACH datosA GENERATE columna1, columna2, columna3, REPLACE(columna4, 'Sun', 'dom') AS columna4,
+ REPLACE(columna5, 'Sun', 'domingo') AS columna5;
+
+STORE datosA INTO './output' using PigStorage(',');

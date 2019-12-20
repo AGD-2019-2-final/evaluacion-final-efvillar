@@ -8,3 +8,9 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+datos = LOAD 'data.tsv' using PigStorage('\t') AS (id:chararray,date:chararray,numero:int);
+y = ORDER datos BY numero ASC;
+x = FOREACH y generate numero;
+z = LIMIT x 5;
+
+STORE z INTO './output' using PigStorage('\t');

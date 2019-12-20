@@ -41,4 +41,24 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+DROP TABLE IF EXISTS temporal;
+CREATE TABLE temporal AS
+--SELECT  c2 AS c2, map_values(c6) AS c6  FROM tbl0;
+SELECT  c2, temp2 as temp2 FROM tbl0
+    LATERAL VIEW explode(c6) ss as temp1, temp2;
+
+
+DROP TABLE IF EXISTS temporal1;
+CREATE TABLE temporal1 AS
+SELECT  c2, sum(temp2) FROM temporal
+GROUP BY c2;
+
+
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY ':'
+STORED AS TEXTFILE
+Select * FROM temporal1;
 
